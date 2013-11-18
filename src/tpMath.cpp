@@ -452,6 +452,12 @@ void keyboardUp(unsigned char key, int x, int y)
 			keyMinusPushed = false;
 			break;
 
+
+		case 'r':
+		case 'R':
+			initTabVertex();
+			break;
+
 		default:
 			cerr << "[Keyboard Up] key = '" << key << "' (" << (int)(key) << ") x = " << x << " y = " << y << endl;
 			break;
