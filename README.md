@@ -6,7 +6,7 @@ Repo. du projet OpenGL du TP1 de Math
 _Le code a été compiler sous linux_
 
 ## Commandes ##
-| **Rotation**              | **Translation**       |   **Scale**     (en cours...)      |
+| **Rotation**              | **Translation**       |   **Scale**     		|
 | -------------             | --------------        | ------------          |
 | Up/Down : Rotation X      | Q/D : Translation X   | +/- : Scale homogene  |
 | Left/Right : Rotation Y   | Z/S : Translation Y   | I/K : Scale X         |
