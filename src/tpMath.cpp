@@ -20,9 +20,6 @@
 
 using namespace std;
 
-GLfloat rotX = 0;
-GLfloat rotY = 0;
-
 Point3D<GLfloat> posCam(0.0, 0.0, -5.0, 1.0);
 Point3D<GLfloat> * tabColor[12];
 Point3D<GLfloat> * tabVertex[12];
@@ -39,6 +36,15 @@ bool keyDPushed = false;
 bool keyEPushed = false;
 bool keyAPushed = false;
 
+bool keyPlusPushed = false;
+bool keyMinusPushed = false;
+bool keyIPushed = false;
+bool keyKPushed = false;
+bool keyOPushed = false;
+bool keyLPushed = false;
+bool keyPPushed = false;
+bool keyMPushed = false;
+
 enum axe
 {
 	X = 0,
@@ -50,6 +56,14 @@ void applyMatrixToVertices(const Matrice3D<GLfloat> & mat)
 {
 	for(unsigned i = 0; i < sizeof(tabVertex) / sizeof(tabVertex[0]); ++i)
 		tabVertex[i]->dot(mat);
+}
+
+Matrice3D<GLfloat> genScale(GLfloat sX, GLfloat sY, GLfloat sZ)
+{
+	return Matrice3D<GLfloat>(sX, 0.0, 0.0, 0.0,
+							  0.0, sY, 0.0, 0.0,
+							  0.0, 0.0, sZ, 0.0,
+							  0.0, 0.0, 0.0, 1.0);
 }
 
 Matrice3D<GLfloat> genTranslate(GLfloat unit, axe up)
@@ -167,6 +181,33 @@ void translation()
 		posCam.dot(genTranslate(0.05, Z));
 }
 
+void scaling()
+{
+	if(keyPlusPushed)
+		applyMatrixToVertices(genScale(1.01, 1.01, 1.01));
+
+	if(keyMinusPushed)
+		applyMatrixToVertices(genScale(0.99, 0.99, 0.99));
+
+	if(keyIPushed)
+		applyMatrixToVertices(genScale(1.01, 1.0, 1.0));
+
+	if(keyKPushed)
+		applyMatrixToVertices(genScale(0.99, 1.0, 1.0));
+
+	if(keyOPushed)
+		applyMatrixToVertices(genScale(1.0, 1.01, 1.0));
+
+	if(keyLPushed)
+		applyMatrixToVertices(genScale(1.0, 0.99, 1.0));
+
+	if(keyPPushed)
+		applyMatrixToVertices(genScale(1.0, 1.0, 1.01));
+
+	if(keyMPushed)
+		applyMatrixToVertices(genScale(1.0, 1.0, 0.99));
+}
+
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
@@ -176,6 +217,7 @@ void display()
 
 	translation();
 	rotation();
+	scaling();
 
     glBegin(GL_TRIANGLES);
     	for(unsigned i = 0; i < sizeof(tabVertex) / sizeof(tabVertex[0]); ++i)
@@ -267,7 +309,6 @@ void keyboardDown(unsigned char key, int x, int y)
 		case 'z':
 		case 'Z':
 			keyZPushed = true;
-			cout << "Pushed" << endl;
 			break;
 
 		case 's':
@@ -295,8 +336,46 @@ void keyboardDown(unsigned char key, int x, int y)
 			keyEPushed = true;
 			break;
 
+		case 'i':
+		case 'I':
+			keyIPushed = true;
+			break;
+
+		case 'k':
+		case 'K':
+			keyKPushed = true;
+			break;
+
+		case 'o':
+		case 'O':
+			keyOPushed = true;
+			break;
+
+		case 'l':
+		case 'L':
+			keyLPushed = true;
+			break;
+
+		case 'p':
+		case 'P':
+			keyPPushed = true;
+			break;
+
+		case 'm':
+		case 'M':
+			keyMPushed = true;
+			break;
+
+		case '+':
+			keyPlusPushed = true;
+			break;
+
+		case '-':
+			keyMinusPushed = true;
+			break;
+
 		default:
-			cerr << "[Keyboard] key = " << key << " (" << (int)(key) << ") x = " << x << " y = " << y << endl;
+			cerr << "[Keyboard Down] key = '" << key << "' (" << (int)(key) << ") x = " << x << " y = " << y << endl;
 			break;
 	}
 }
@@ -308,7 +387,6 @@ void keyboardUp(unsigned char key, int x, int y)
 		case 'z':
 		case 'Z':
 			keyZPushed = false;
-			cout << "Up" << endl;
 			break;
 
 		case 's':
@@ -336,8 +414,46 @@ void keyboardUp(unsigned char key, int x, int y)
 			keyEPushed = false;
 			break;
 
+		case 'i':
+		case 'I':
+			keyIPushed = false;
+			break;
+
+		case 'k':
+		case 'K':
+			keyKPushed = false;
+			break;
+
+		case 'o':
+		case 'O':
+			keyOPushed = false;
+			break;
+
+		case 'l':
+		case 'L':
+			keyLPushed = false;
+			break;
+
+		case 'p':
+		case 'P':
+			keyPPushed = false;
+			break;
+
+		case 'm':
+		case 'M':
+			keyMPushed = false;
+			break;
+
+		case '+':
+			keyPlusPushed = false;
+			break;
+
+		case '-':
+			keyMinusPushed = false;
+			break;
+
 		default:
-			cerr << "[Keyboard] key = " << key << " (" << (int)(key) << ") x = " << x << " y = " << y << endl;
+			cerr << "[Keyboard Up] key = '" << key << "' (" << (int)(key) << ") x = " << x << " y = " << y << endl;
 			break;
 	}
 }
