@@ -5,13 +5,10 @@ Repo. du projet OpenGL du TP1 de Math
 
 _Le code a été compiler sous linux_
 
-**Commandes**
-
-*Rotation
-   *Left/Right : Rotation Y
-   *Up/Down : Rotation X
-  
-*Translation
-   *Z/S : Translation Y
-   *Q/D : Translation X
-   *A/E : Translation Z
+## Commandes ##
+| **Rotation**              | **Translation**       |   **Scale**     (en cours...)      |
+| -------------             | --------------        | ------------          |
+| Up/Down : Rotation X      | Q/D : Translation X   | +/- : Scale homogene  |
+| Left/Right : Rotation Y   | Z/S : Translation Y   | I/K : Scale X         |
+|                           | A/E : Translation Z   | O/L : Scale Y         |
+|                           |                       | P/M : Scale Z         |
