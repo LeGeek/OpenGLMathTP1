@@ -18,6 +18,11 @@
 #define WIDTH_SCREEN 800
 #define HEIGHT_SCREEN 600
 
+#define ROTATE_VALUE		1
+#define TRANSLATE_VALUE 	0.05
+#define SCALE_UP 			1.01
+#define SCALE_DOWN 			0.99
+
 using namespace std;
 
 Point3D<GLfloat> posCam(0.0, 0.0, -5.0, 1.0);
@@ -148,64 +153,64 @@ void initGl()
 void rotation()
 {
 	if(keyRotUpXPushed)
-		applyMatrixToVertices(genRotate(1, X));
+		applyMatrixToVertices(genRotate(ROTATE_VALUE, X));
 
 	if(keyRotDownXPushed)
-		applyMatrixToVertices(genRotate(-1, X));
+		applyMatrixToVertices(genRotate(-ROTATE_VALUE, X));
 
 	if(keyRotUpYPushed)
-		applyMatrixToVertices(genRotate(1, Y));
+		applyMatrixToVertices(genRotate(ROTATE_VALUE, Y));
 
 	if(keyRotDownYPushed)
-		applyMatrixToVertices(genRotate(-1, Y));
+		applyMatrixToVertices(genRotate(-ROTATE_VALUE, Y));
 }
 
 void translation()
 {
 	if(keyZPushed)
-		posCam.dot(genTranslate(-0.05, Y));
+		posCam.dot(genTranslate(-TRANSLATE_VALUE, Y));
 
 	if(keySPushed)
-		posCam.dot(genTranslate(0.05, Y));
+		posCam.dot(genTranslate(TRANSLATE_VALUE, Y));
 
 	if(keyQPushed)
-		posCam.dot(genTranslate(-0.05, X));
+		posCam.dot(genTranslate(-TRANSLATE_VALUE, X));
 
 	if(keyDPushed)
-		posCam.dot(genTranslate(0.05, X));
+		posCam.dot(genTranslate(TRANSLATE_VALUE, X));
 
 	if(keyEPushed)
-		posCam.dot(genTranslate(-0.05, Z));
+		posCam.dot(genTranslate(-TRANSLATE_VALUE, Z));
 
 	if(keyAPushed)
-		posCam.dot(genTranslate(0.05, Z));
+		posCam.dot(genTranslate(TRANSLATE_VALUE, Z));
 }
 
 void scaling()
 {
 	if(keyPlusPushed)
-		applyMatrixToVertices(genScale(1.01, 1.01, 1.01));
+		applyMatrixToVertices(genScale(SCALE_UP, SCALE_UP, SCALE_UP));
 
 	if(keyMinusPushed)
-		applyMatrixToVertices(genScale(0.99, 0.99, 0.99));
+		applyMatrixToVertices(genScale(SCALE_DOWN, SCALE_DOWN, SCALE_DOWN));
 
 	if(keyIPushed)
-		applyMatrixToVertices(genScale(1.01, 1.0, 1.0));
+		applyMatrixToVertices(genScale(SCALE_UP, 1.0, 1.0));
 
 	if(keyKPushed)
-		applyMatrixToVertices(genScale(0.99, 1.0, 1.0));
+		applyMatrixToVertices(genScale(SCALE_DOWN, 1.0, 1.0));
 
 	if(keyOPushed)
-		applyMatrixToVertices(genScale(1.0, 1.01, 1.0));
+		applyMatrixToVertices(genScale(1.0, SCALE_UP, 1.0));
 
 	if(keyLPushed)
-		applyMatrixToVertices(genScale(1.0, 0.99, 1.0));
+		applyMatrixToVertices(genScale(1.0, SCALE_DOWN, 1.0));
 
 	if(keyPPushed)
-		applyMatrixToVertices(genScale(1.0, 1.0, 1.01));
+		applyMatrixToVertices(genScale(1.0, 1.0, SCALE_UP));
 
 	if(keyMPushed)
-		applyMatrixToVertices(genScale(1.0, 1.0, 0.99));
+		applyMatrixToVertices(genScale(1.0, 1.0, SCALE_DOWN));
 }
 
 void display()
