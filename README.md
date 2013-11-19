@@ -17,7 +17,7 @@ _Le code a été compiler sous linux_
 
 Le fonctionnement principal est relativement simple. On utilise une matrice identité (matrice de transformation) à laquelle on applique les matrices de rotation, translation et de mise a l'échelle (scale). Une fois la matrice calculée on l'applique à chaque points de la figure.
 
-# Classes #
+### Classes ###
 Plusieurs classes composent le projet, voici une breve description de ces dernières:
 
 | **Nom**		| 							**Description**											|
