@@ -14,6 +14,7 @@
 
 #include "Matrice3D.h"
 #include "Point3D.h"
+#include "DrawText.h"
 
 #define WIDTH_SCREEN 800
 #define HEIGHT_SCREEN 600
@@ -60,14 +61,14 @@ bool keyLPushed = false;
 bool keyPPushed = false;
 bool keyMPushed = false;
 
+DrawText testText(1, 15, (char*)"Hello World\0", 1.0, 1.0, 1.0);
+
 
 
 void applyMatrixToVertices(const Matrice3D<GLfloat> & mat)
 {
 	for(unsigned i = 0; i < sizeof(tabVertex) / sizeof(tabVertex[0]); ++i)
 			tabVertex[i]->dot(mat);
-
-	cout << "Point 0 : X=" << tabVertex[0]->getValue(X_VALUE) << " Y="  << tabVertex[0]->getValue(Y_VALUE) << " Z=" << tabVertex[0]->getValue(Z_VALUE) << endl;
 }
 
 Matrice3D<GLfloat> genScale(GLfloat sX, GLfloat sY, GLfloat sZ)
@@ -221,11 +222,31 @@ void scaling()
 		scaleZ -= SCALE_VALUE;
 }
 
+void display2D()
+{
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0, WIDTH_SCREEN, HEIGHT_SCREEN, 0, -1.0, 10.0);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glDisable(GL_CULL_FACE);
+
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	testText.draw();
+
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
 void display()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear The Screen And The Depth Buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
-
 
 	gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0);
 
@@ -253,6 +274,8 @@ void display()
     				   tmpPoint.getValue(Z_VALUE));
     	}
 	glEnd();
+
+	display2D();
 
 	glutSwapBuffers();
 	glutPostRedisplay();
