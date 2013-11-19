@@ -98,4 +98,12 @@ inline const T & Matrice3D<T>::getValue(int row, int col) const throw(TpMathExce
 		throw TpMathException("Invalid position");
 }
 
+template <typename T>
+inline void Matrice3D<T>::loadIdentity()
+{
+	for(unsigned i = 0; i < 4; ++i)
+		for(unsigned j = 0; j < 4; ++j)
+			mat[i][j] = (i == j) ? 1.0 : 0.0;
+}
+
 #endif /* MATRICE3D_HPP_ */

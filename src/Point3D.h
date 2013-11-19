@@ -25,7 +25,7 @@ class Point3D
 		Point3D(T x, T y, T z, T w);
 		virtual ~Point3D();
 
-		void dot(const Matrice3D<T> & m);
+		const Point3D<T> dot(const Matrice3D<T> & m);
 
 		const T & getValue(Point3DValue val) const;
 

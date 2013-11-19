@@ -25,6 +25,7 @@ class Matrice3D
 
 		const T & getValue(int row, int col) const throw(TpMathException);
 		const T *  getOpenGLMatrix() const throw();
+		void loadIdentity();
 
 	private:
 		T mat[4][4];

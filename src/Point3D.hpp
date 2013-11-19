@@ -28,7 +28,7 @@ template <typename T>
 inline const T & Point3D<T>::getValue(Point3DValue val) const { return point[val]; }
 
 template <typename T>
-inline void Point3D<T>::dot(const Matrice3D<T> & m)
+inline const Point3D<T> Point3D<T>::dot(const Matrice3D<T> & m)
 {
 	T tmpPts[4];
 	T tmpVal;
@@ -46,8 +46,7 @@ inline void Point3D<T>::dot(const Matrice3D<T> & m)
 		tmpPts[i] = tmpVal;
 	}
 
-	for(int i = 0; i < 4; ++i)
-		point[i] = tmpPts[i];
+	return Point3D<T>(tmpPts[0], tmpPts[1], tmpPts[2], tmpPts[3]);
 }
 
 
