@@ -4,14 +4,17 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../src/Point3D.cpp \
 ../src/TpMathException.cpp \
 ../src/tpMath.cpp 
 
 OBJS += \
+./src/Point3D.o \
 ./src/TpMathException.o \
 ./src/tpMath.o 
 
 CPP_DEPS += \
+./src/Point3D.d \
 ./src/TpMathException.d \
 ./src/tpMath.d 
 

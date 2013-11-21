@@ -10,7 +10,9 @@
 #include <iomanip>
 
 #include <GL/glut.h>
+
 #include <cmath>
+#include <cstdio>
 
 #include "Matrice3D.h"
 #include "Point3D.h"
@@ -25,11 +27,10 @@
 
 using namespace std;
 
-Point3D<GLfloat> * tabColor[12];
-Point3D<GLfloat> * tabVertex[12];
+Point3D<GLfloat> * tabVertex[24];
 Point3D<GLfloat> tmpPoint(0.0, 0.0, 0.0, 0.0);
 
-Matrice3D<GLfloat> matProj(1.0, 0.0, 0.0, 0.0,
+Matrice3D<GLfloat> matTransfo(1.0, 0.0, 0.0, 0.0,
 						   0.0, 1.0, 0.0, 0.0,
 						   0.0, 0.0, 1.0, 0.0,
 						   0.0, 0.0, 0.0, 1.0);
@@ -61,8 +62,11 @@ bool keyLPushed = false;
 bool keyPPushed = false;
 bool keyMPushed = false;
 
-DrawText testText(1, 15, (char*)"Hello World\0", 1.0, 1.0, 1.0);
-
+DrawText textBot[] = {	DrawText(GLUT_BITMAP_9_BY_15, 5, HEIGHT_SCREEN - 31, (char*)"(Z/S   Q/D   A/E) = (Tx  Ty  Tz)", 1.0, 1.0, 1.0),
+						DrawText(GLUT_BITMAP_9_BY_15, 5, HEIGHT_SCREEN - 16, (char*)"(Up/Down/8/2   Left/Right/4/6   7/9) = (Rx  Ry  Rz)", 1.0, 1.0, 1.0),
+						DrawText(GLUT_BITMAP_9_BY_15, 5, HEIGHT_SCREEN - 1, (char*)"(I/K   O/L   P/M) = (Sx  Sy  Sz)    |    +/- : Scale Homogène", 1.0, 1.0, 1.0),
+						DrawText(GLUT_BITMAP_9_BY_15, 5, 15, (char*)"FPS : XX", 1.0, 1.0, 1.0)};
+char * tmp = new char[50];
 
 
 void applyMatrixToVertices(const Matrice3D<GLfloat> & mat)
@@ -104,30 +108,35 @@ Matrice3D<GLfloat> genRotate(GLfloat deg, GLfloat coefX, GLfloat coefY, GLfloat 
 
 void initTabVertex()
 {
-	tabColor[0] = new Point3D<GLfloat>(1.0f, 0.0f, 0.0f, 0.0f);
-	tabVertex[0] = new Point3D<GLfloat>(0.0f, 1.0f, 0.0f, 1.0f);
-	tabColor[1] = new Point3D<GLfloat>(0.0f,1.0f,0.0f, 0.0f);
-	tabVertex[1] = new Point3D<GLfloat>(-1.0f,-1.0f, 1.0f, 1.0f);
-	tabColor[2] = new Point3D<GLfloat>(0.0f,0.0f,1.0f, 0.0f);
-	tabVertex[2] = new Point3D<GLfloat>( 1.0f,-1.0f, 1.0f, 1.0f);
-	tabColor[3] = new Point3D<GLfloat>(1.0f,0.0f,0.0f, 0.0f);
-	tabVertex[3] = new Point3D<GLfloat>( 0.0f, 1.0f, 0.0f, 1.0f);
-	tabColor[4] = new Point3D<GLfloat>(0.0f,0.0f,1.0f, 0.0f);
-	tabVertex[4] = new Point3D<GLfloat>( 1.0f,-1.0f, 1.0f, 1.0f);
-	tabColor[5] = new Point3D<GLfloat>(0.0f,1.0f,0.0f, 0.0f);
-	tabVertex[5] = new Point3D<GLfloat>( 1.0f,-1.0f, -1.0f, 1.0f);
-	tabColor[6] = new Point3D<GLfloat>(1.0f,0.0f,0.0f, 0.0f);
-	tabVertex[6] = new Point3D<GLfloat>( 0.0f, 1.0f, 0.0f, 1.0f);
-	tabColor[7] = new Point3D<GLfloat>(0.0f,1.0f,0.0f, 0.0f);
-	tabVertex[7] = new Point3D<GLfloat>( 1.0f,-1.0f, -1.0f, 1.0f);
-	tabColor[8] = new Point3D<GLfloat>(0.0f,0.0f,1.0f, 0.0f);
-	tabVertex[8] = new Point3D<GLfloat>(-1.0f,-1.0f, -1.0f, 1.0f);
-	tabColor[9] = new Point3D<GLfloat>(1.0f,0.0f,0.0f, 0.0f);
-	tabVertex[9] = new Point3D<GLfloat>( 0.0f, 1.0f, 0.0f, 1.0f);
-	tabColor[10] = new Point3D<GLfloat>(0.0f,0.0f,1.0f, 0.0f);
-	tabVertex[10] = new Point3D<GLfloat>(-1.0f,-1.0f,-1.0f, 1.0f);
-	tabColor[11] = new Point3D<GLfloat>(0.0f,1.0f,0.0f, 0.0f);
-	tabVertex[11] = new Point3D<GLfloat>(-1.0f,-1.0f, 1.0f, 1.0f);
+	tabVertex[0] = new Point3D<GLfloat>( 1.0f, 1.0f,-1.0f, 1.0, 0.0, 1.0, 0.0);
+	tabVertex[1] = new Point3D<GLfloat>(-1.0f, 1.0f,-1.0f, 1.0);
+	tabVertex[2] = new Point3D<GLfloat>(-1.0f, 1.0f, 1.0f, 1.0);
+	tabVertex[3] = new Point3D<GLfloat>( 1.0f, 1.0f, 1.0f, 1.0);
+
+	tabVertex[4] = new Point3D<GLfloat>( 1.0f,-1.0f, 1.0f, 1.0, 1.0, 0.5, 0.0);
+	tabVertex[5] = new Point3D<GLfloat>(-1.0f,-1.0f, 1.0f, 1.0);
+	tabVertex[6] = new Point3D<GLfloat>(-1.0f,-1.0f,-1.0f, 1.0);
+	tabVertex[7] = new Point3D<GLfloat>( 1.0f,-1.0f,-1.0f, 1.0);
+
+	tabVertex[8] = new Point3D<GLfloat>( 1.0f, 1.0f, 1.0f, 1.0, 1.0, 0.0, 0.0);
+	tabVertex[9] = new Point3D<GLfloat>(-1.0f, 1.0f, 1.0f, 1.0);
+	tabVertex[10] = new Point3D<GLfloat>(-1.0f,-1.0f, 1.0f, 1.0);
+	tabVertex[11] = new Point3D<GLfloat>( 1.0f,-1.0f, 1.0f, 1.0);
+
+	tabVertex[12] = new Point3D<GLfloat>( 1.0f,-1.0f,-1.0f, 1.0, 1.0, 1.0, 0.0);
+	tabVertex[13] = new Point3D<GLfloat>(-1.0f,-1.0f,-1.0f, 1.0);
+	tabVertex[14] = new Point3D<GLfloat>(-1.0f, 1.0f,-1.0f, 1.0);
+	tabVertex[15] = new Point3D<GLfloat>( 1.0f, 1.0f,-1.0f, 1.0);
+
+	tabVertex[16] = new Point3D<GLfloat>(-1.0f, 1.0f, 1.0f, 1.0, 0.0, 0.0, 1.0);
+	tabVertex[17] = new Point3D<GLfloat>(-1.0f, 1.0f,-1.0f, 1.0);
+	tabVertex[18] = new Point3D<GLfloat>(-1.0f,-1.0f,-1.0f, 1.0);
+	tabVertex[19] = new Point3D<GLfloat>(-1.0f,-1.0f, 1.0f, 1.0);
+
+	tabVertex[20] = new Point3D<GLfloat>( 1.0f, 1.0f,-1.0f, 1.0, 1.0, 0.0, 1.0);
+	tabVertex[21] = new Point3D<GLfloat>( 1.0f, 1.0f, 1.0f, 1.0);
+	tabVertex[22] = new Point3D<GLfloat>( 1.0f,-1.0f, 1.0f, 1.0);
+	tabVertex[23] = new Point3D<GLfloat>( 1.0f,-1.0f,-1.0f, 1.0);
 }
 
 void initValue()
@@ -141,28 +150,27 @@ void initGl()
 {
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glShadeModel(GL_FLAT);
 	glEnable(GL_DEPTH_TEST);
+	glShadeModel(GL_FLAT);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 void rotation()
 {
 	if(key8Pushed)
 		rotX += ROTATE_VALUE;
-
-	if(key2Pushed)
+	else if(key2Pushed)
 		rotX -= ROTATE_VALUE;
 
 	if(key4Pushed)
 		rotY += ROTATE_VALUE;
-
-	if(key6Pushed)
+	else if(key6Pushed)
 		rotY -= ROTATE_VALUE;
 
 	if(key7Pushed)
 		rotZ += ROTATE_VALUE;
-
-	if(key9Pushed)
+	else if(key9Pushed)
 		rotZ -= ROTATE_VALUE;
 }
 
@@ -170,20 +178,17 @@ void translation()
 {
 	if(keyQPushed)
 		transX += TRANSLATE_VALUE;
-
-	if(keyDPushed)
+	else if(keyDPushed)
 		transX -= TRANSLATE_VALUE;
 
 	if(keyZPushed)
 		transY += TRANSLATE_VALUE;
-
-	if(keySPushed)
+	else if(keySPushed)
 		transY -= TRANSLATE_VALUE;
 
 	if(keyEPushed)
 		transZ += TRANSLATE_VALUE;
-
-	if(keyAPushed)
+	else if(keyAPushed)
 		transZ -= TRANSLATE_VALUE;
 }
 
@@ -195,8 +200,7 @@ void scaling()
 		scaleY += SCALE_VALUE;
 		scaleZ += SCALE_VALUE;
 	}
-
-	if(keyMinusPushed)
+	else if(keyMinusPushed)
 	{
 		scaleX -= SCALE_VALUE;
 		scaleY -= SCALE_VALUE;
@@ -205,20 +209,17 @@ void scaling()
 
 	if(keyIPushed)
 		scaleX += SCALE_VALUE;
-
-	if(keyKPushed)
+	else if(keyKPushed)
 		scaleX -= SCALE_VALUE;
 
 	if(keyOPushed)
 		scaleY += SCALE_VALUE;
-
-	if(keyLPushed)
+	else if(keyLPushed)
 		scaleY -= SCALE_VALUE;
 
 	if(keyPPushed)
 		scaleZ += SCALE_VALUE;
-
-	if(keyMPushed)
+	else if(keyMPushed)
 		scaleZ -= SCALE_VALUE;
 }
 
@@ -236,7 +237,8 @@ void display2D()
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	testText.draw();
+	for(int i = 0; i < 4; ++i)
+		textBot[i].draw();
 
 	glMatrixMode(GL_PROJECTION);
 	glPopMatrix();
@@ -245,6 +247,8 @@ void display2D()
 
 void display()
 {
+	long beginTime = glutGet(GLUT_ELAPSED_TIME);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
 
@@ -254,21 +258,21 @@ void display()
 	rotation();
 	scaling();
 
-	matProj.loadIdentity();
-	matProj.dot(genTranslate(transX, transY, transZ));
-	matProj.dot(genRotate(rotX, 1.0, 0.0, 0.0));
-	matProj.dot(genRotate(rotY, 0.0, 1.0, 0.0));
-	matProj.dot(genRotate(rotZ, 0.0, 0.0, 1.0));
-	matProj.dot(genScale(scaleX, scaleY, scaleZ));
+	matTransfo.loadIdentity();
+	matTransfo.dot(genTranslate(transX, transY, transZ));
+	matTransfo.dot(genRotate(rotX, 1.0, 0.0, 0.0));
+	matTransfo.dot(genRotate(rotY, 0.0, 1.0, 0.0));
+	matTransfo.dot(genRotate(rotZ, 0.0, 0.0, 1.0));
+	matTransfo.dot(genScale(scaleX, scaleY, scaleZ));
 
-    glBegin(GL_TRIANGLES);
+    glBegin(GL_QUADS);
     	for(unsigned i = 0; i < sizeof(tabVertex) / sizeof(tabVertex[0]); ++i)
     	{
-    		glColor3f(tabColor[i]->getValue(X_VALUE),
-					  tabColor[i]->getValue(Y_VALUE),
-					  tabColor[i]->getValue(Z_VALUE));
+    		glColor3f(tabVertex[i]->getColor(RED_VALUE),
+    				  tabVertex[i]->getColor(GREEN_VALUE),
+    				  tabVertex[i]->getColor(BLUE_VALUE));
 
-    		tmpPoint = tabVertex[i]->dot(matProj);
+    		tmpPoint = tabVertex[i]->dot(matTransfo);
     		glVertex3f(tmpPoint.getValue(X_VALUE),
     				   tmpPoint.getValue(Y_VALUE),
     				   tmpPoint.getValue(Z_VALUE));
@@ -279,7 +283,11 @@ void display()
 
 	glutSwapBuffers();
 	glutPostRedisplay();
+
+	sprintf(tmp, "FPS : %.0f", 1.0 / ((glutGet(GLUT_ELAPSED_TIME) - beginTime)/1000.0));
+	textBot[3].setText(tmp);
 }
+
 
 void reshape(int w, int h)
 {
@@ -287,7 +295,7 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(60.0f,(GLfloat)WIDTH_SCREEN/(GLfloat)HEIGHT_SCREEN,0.1f,100.0f);
+	gluPerspective(45.0f,(GLfloat)WIDTH_SCREEN/(GLfloat)HEIGHT_SCREEN,0.1f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -394,7 +402,7 @@ void keyboardDown(unsigned char key, int x, int y)
 
 		default:
 			cerr << "[Keyboard Down] key = '" << key << "' (" << (int)(key) << ") x = " << x << " y = " << y << endl;
-			break;
+			return;
 	}
 }
 
@@ -499,9 +507,18 @@ void keyboardUp(unsigned char key, int x, int y)
 			initValue();
 			break;
 
+
+		case 'f':
+			glutFullScreen();
+			break;
+
+		case 'F':
+			glutPositionWindow(10, 10);
+			break;
+
 		default:
 			cerr << "[Keyboard Up] key = '" << key << "' (" << (int)(key) << ") x = " << x << " y = " << y << endl;
-			break;
+			return;
 	}
 }
 
@@ -526,7 +543,7 @@ void specialKeyboardDown(int key, int x, int y)
 			break;
 
 		default:
-			break;
+			return;
 	}
 }
 
@@ -551,7 +568,7 @@ void specialKeyboardUp(int key, int x, int y)
 			break;
 
 		default:
-			break;
+			return;
 	}
 }
 

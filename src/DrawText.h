@@ -13,12 +13,13 @@
 class DrawText
 {
 	public:
-		DrawText(int x = 0, int y = 0, char * str = '\0', GLfloat red = 0.0, GLfloat green = 0.0, GLfloat blue = 0.0);
+		DrawText(void * font = GLUT_BITMAP_9_BY_15, int x = 0, int y = 0, char * str = '\0', GLfloat red = 0.0, GLfloat green = 0.0, GLfloat blue = 0.0);
 		virtual ~DrawText();
 
 		void setPosition(int x, int y);
 		void setText(char * str);
 		void setColor(GLfloat red, GLfloat green, GLfloat blue);
+		void setFont(void * newFont);
 
 		int getX() const;
 		int getY() const;
@@ -26,6 +27,7 @@ class DrawText
 		GLfloat getGreen() const;
 		GLfloat getBlue() const;
 		char * getString() const;
+		void * getFont() const;
 
 		void draw();
 
@@ -33,6 +35,7 @@ class DrawText
 		int x, y;
 		GLfloat r, g, b;
 		char * string;
+		void * font;
 };
 
 #include "DrawText.hpp"
