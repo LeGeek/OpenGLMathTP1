@@ -295,7 +295,7 @@ void reshape(int w, int h)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	gluPerspective(45.0f,(GLfloat)WIDTH_SCREEN/(GLfloat)HEIGHT_SCREEN,0.1f,100.0f);
+	gluPerspective(45.0f,(GLfloat)w/(GLfloat)h,0.1f,100.0f);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
