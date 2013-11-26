@@ -26,3 +26,8 @@ Plusieurs classes composent le projet, voici une breve description de ces derni�
 | Point3D		| Permet de gérer les points en coord. homogène (donc un tableau de 4 éléments)		|
 | DrawText		| Automatise le dessin d'un texte (en mode HUD) à l'écran							|
 
+### Autre ###
+
+| **Nom**		|						**Description**											|
+|----------		|-------------------															|
+|MatrixGenerator| _Namespace_ Ensemble de fonctions de génération de matrice de transformation 	|
