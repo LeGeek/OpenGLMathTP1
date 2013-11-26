@@ -3,7 +3,7 @@ OpenGLMathTP1
 
 Repo. du projet OpenGL du TP1 de Math
 
-_Le code a été compiler sous linux_
+_Le code a été compilé sous linux_
 
 ## Commandes ##
 | **Rotation**              		| **Translation**       |   **Scale**     		| **Autres** 		|
