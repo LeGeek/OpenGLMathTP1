@@ -26,9 +26,9 @@ Point3D<GLfloat> * tabVertex[24];
 Point3D<GLfloat> tmpPoint(0.0, 0.0, 0.0, 0.0);
 
 Matrice3D<GLfloat> matTransfo(1.0, 0.0, 0.0, 0.0,
-						   0.0, 1.0, 0.0, 0.0,
-						   0.0, 0.0, 1.0, 0.0,
-						   0.0, 0.0, 0.0, 1.0);
+						   	  0.0, 1.0, 0.0, 0.0,
+						   	  0.0, 0.0, 1.0, 0.0,
+						   	  0.0, 0.0, 0.0, 1.0);
 
 GLfloat transX = 0, transY = 0, transZ = 0;
 GLfloat rotX = 0, rotY = 0, rotZ = 0;
@@ -558,6 +558,8 @@ int main(int argc, char** argv)
 	initTabVertex();
 
 	boost::thread controlKey(&threadFunc);
+
+	cout << "Version : " << glGetString(GL_VERSION) << endl;
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);

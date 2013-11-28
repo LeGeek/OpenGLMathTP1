@@ -4,6 +4,7 @@ OpenGLMathTP1
 Repo. du projet OpenGL du TP1 de Math
 
 _Le code a été compilé sous linux_
+_Version : 4.2.0 NVIDIA 304.88_
 
 ## Commandes ##
 | **Rotation**              		| **Translation**       |   **Scale**     		| **Autres** 		|
