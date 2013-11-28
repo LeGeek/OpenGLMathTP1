@@ -1,10 +1,11 @@
 #include <iostream>
 #include <iomanip>
+#include <stdio.h>
+
+#include <boost/thread/thread.hpp>
 
 #include <GL/glut.h>
 
-#include <cmath>
-#include <cstdio>
 
 #include "Matrice3D.h"
 #include "Point3D.h"
@@ -216,10 +217,6 @@ void display()
     glLoadIdentity();
 
 	gluLookAt(0.0, 0.0, -5.0, 0.0, 0.0, 100.0, 0.0, 1.0, 0.0);
-
-	translation();
-	rotation();
-	scaling();
 
 	matTransfo.loadIdentity();
 	matTransfo.dot(MatrixGenerator::genTranslate(transX, transY, transZ));
@@ -535,6 +532,20 @@ void specialKeyboardUp(int key, int x, int y)
 	}
 }
 
+void threadFunc()
+{
+	unsigned long oldTime = glutGet(GLUT_ELAPSED_TIME);
+	while(true)
+	{
+		if(glutGet(GLUT_ELAPSED_TIME) - oldTime < 10) continue;
+
+		translation();
+		rotation();
+		scaling();
+		oldTime = glutGet(GLUT_ELAPSED_TIME);
+	}
+}
+
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
@@ -545,6 +556,8 @@ int main(int argc, char** argv)
 
 	initGl();
 	initTabVertex();
+
+	boost::thread controlKey(&threadFunc);
 
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(display);

@@ -1,3 +1,5 @@
+#include <math.h>
+
 namespace MatrixGenerator
 {
 	Matrice3D<GLfloat> genScale(GLfloat sX, GLfloat sY, GLfloat sZ)

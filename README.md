@@ -31,3 +31,11 @@ Plusieurs classes composent le projet, voici une breve description de ces derni�
 | **Nom**		|						**Description**											|
 |----------		|-------------------															|
 |MatrixGenerator| _Namespace_ Ensemble de fonctions de génération de matrice de transformation 	|
+
+### Thread ###
+Il y a au total _2_ threads dans le programme :
+
+| **Thread** 	|		**Utilisation**																										|
+|-------------	|-----------																												|
+| Main thread	| Partie "OpenGL" qui dessine et calcule les matrices																		|
+| #1 ControlKey | Partie "Clavier" qui controle la touche appuyée et réagit en conséquence (De/Incrémentation de Rotation/Traslation/Scale)	|
