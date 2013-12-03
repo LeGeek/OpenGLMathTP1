@@ -549,7 +549,7 @@ void threadFunc()
 int main(int argc, char** argv)
 {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition(10, 10);
 	glutInitWindowSize(WIDTH_SCREEN, HEIGHT_SCREEN);
 	glutCreateWindow(argv[0]);
